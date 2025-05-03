@@ -1,11 +1,22 @@
+// routes/favoriteRoutes.js
 const express = require("express");
-const router = express.Router();
-const { addToFavorites, getFavorites, removeFavorite } = require("../controllers/favoriteController");
-// Burada bütün auth middleware nesnesini almak yerine yalnızca protect fonksiyonunu alıyoruz:
+const router  = express.Router();
+
+// protect alias’ı verifyToken fonksiyonuna işaret ediyor
 const { protect } = require("../middleware/authMiddleware");
 
-router.post("/favorites", protect, addToFavorites);
-router.get("/favorites", protect, getFavorites);
-router.delete("/favorites/:productId", protect, removeFavorite);
+const {
+  addToFavorites,
+  getFavorites,
+  removeFavorite,
+} = require("../controllers/favoriteController");
+
+// Test amaçlı (geliştirme sırasında kaldırabilirsiniz)
+// console.log("protect:", protect);
+// console.log("addToFavorites:", addToFavorites);
+
+router.post(   "/favorites",             protect, addToFavorites);
+router.get(    "/favorites",             protect, getFavorites);
+router.delete( "/favorites/:productId",  protect, removeFavorite);
 
 module.exports = router;
